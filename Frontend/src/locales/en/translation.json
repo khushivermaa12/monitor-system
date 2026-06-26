@@ -1,0 +1,12 @@
+{
+  "adminTitle": "Admin Portal Under Maintenance",
+  "adminMessage": "Administrative services are temporarily unavailable.",
+  "userTitle": "Platform Under Maintenance",
+  "userMessage": "We are working to restore service.",
+  "notFoundTitle": "404",
+  "notFoundMessage": "The page you are looking for doesn't exist or has been moved",
+  "maintenance": {
+    "checkAgain": "Check again",
+    "checking": "Checking..."
+  }
+}
