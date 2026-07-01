@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const defaultCheckStatus = async () => {
   try {
@@ -29,6 +30,7 @@ export default function MaintenancePageLoader({
   onBackOnline = null,
   intervalSeconds = 15,
 }) {
+  const { t } = useTranslation();
   const [checking, setChecking] = useState(false);
   const isMounted = useRef(true);
 
@@ -73,10 +75,10 @@ export default function MaintenancePageLoader({
         {checking ? (
           <>
             <SpinnerIcon />
-            Checking...
+            {t('maintenance.checking')}
           </>
         ) : (
-          'Check Again'
+          t('maintenance.checkAgain')
         )}
       </button>
     </div>
