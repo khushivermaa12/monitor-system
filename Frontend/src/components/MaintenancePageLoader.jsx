@@ -29,6 +29,7 @@ export default function MaintenancePageLoader({
   onBackOnline = null,
   intervalSeconds = 15,
 }) {
+  const { t } = useTranslation();
   const [checking, setChecking] = useState(false);
   const isMounted = useRef(true);
 
