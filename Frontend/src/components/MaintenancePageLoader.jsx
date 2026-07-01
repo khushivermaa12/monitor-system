@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-
 const defaultCheckStatus = async () => {
   try {
     const res = await fetch(window.location.href, { cache: 'no-store' });
@@ -30,7 +29,6 @@ export default function MaintenancePageLoader({
   onBackOnline = null,
   intervalSeconds = 15,
 }) {
-  const { t } = useTranslation();
   const [checking, setChecking] = useState(false);
   const isMounted = useRef(true);
 
