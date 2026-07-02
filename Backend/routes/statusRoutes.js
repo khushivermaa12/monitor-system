@@ -40,4 +40,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete("/", async (req, res) => {
+  try {
+    const sessionId = req.sessionID || req.headers["x-session-id"];
+    if (!sessionId)
+      return res.status(400).json({ error: "Missing session id" });
+
+    await UserSession.deleteOne({ sessionId });
+    res.json({ message: "session cleared" });
+  } catch (err) {
+    console.error("statusRoutes DELETE error:", err);
+    res.status(500).json({ error: "Failed to clear session" });
+  }
+});
+
 module.exports = router;

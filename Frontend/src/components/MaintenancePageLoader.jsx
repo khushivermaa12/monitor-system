@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-const defaultCheckStatus = async () => {
-  try {
-    const res = await fetch(window.location.href, { cache: 'no-store' });
-    return res.ok;
-  } catch {
-    return false;
-  }
-};
+import { getStatus, clearSession } from '../services/statusService';
 
 const SpinnerIcon = () => (
   <svg
@@ -25,7 +18,6 @@ const SpinnerIcon = () => (
 );
 
 export default function MaintenancePageLoader({
-  checkStatus = defaultCheckStatus,
   onBackOnline = null,
   intervalSeconds = 15,
 }) {
@@ -42,19 +34,20 @@ export default function MaintenancePageLoader({
     if (checking) return;
     setChecking(true);
     try {
-      const isUp = await checkStatus();
+      const data = await getStatus();
       if (!isMounted.current) return;
-      if (isUp) {
+      if (data.status === 'up' && data.uri) {
+        try { await clearSession(); } catch { /* swallow */ }
         if (onBackOnline) {
-          onBackOnline();
+          onBackOnline(data.uri);
         } else {
-          window.location.reload();
+          window.location.href = data.uri;
         }
         return;
       }
     } catch { /* swallow */ }
     if (isMounted.current) setChecking(false);
-  }, [checking, checkStatus, onBackOnline]);
+  }, [checking, onBackOnline]);
 
   useEffect(() => {
     const tick = setInterval(() => {

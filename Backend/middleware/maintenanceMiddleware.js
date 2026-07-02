@@ -26,11 +26,19 @@ async function maintenanceMiddleware(req, res, next) {
         return res.redirect("/maintenance");
       }
 
-      await UserSession.create({
-        sessionId,
-        uri: req.originalUrl,
-        platform: platform._id,
-      });
+      await UserSession.findOneAndUpdate(
+        { sessionId, resolved: false },
+        {
+          $setOnInsert: {
+            sessionId,
+            uri: req.originalUrl,
+            platform: platform._id,
+            statusAtRedirect: platform.status,
+            createdAt: new Date(),
+          },
+        },
+        { upsert: true, new: true }
+      );
 
       return res.redirect("/maintenance");
     }
