@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+:lang(th),
+[lang="th"],
+[data-language="th"],
+.lang-th {
+  font-family: 'Kanit', sans-serif;
+}
