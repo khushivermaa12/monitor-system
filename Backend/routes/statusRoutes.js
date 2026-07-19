@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Platform = require("../models/Platform");
 const UserSession = require("../models/UserSession");
+
 router.get("/", async (req, res) => {
   try {
     const sessionId = req.sessionID || req.headers["x-session-id"];

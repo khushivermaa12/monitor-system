@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Platform = require("../models/Platform");
 const { checkPlatform } = require("../services/healthCheck");
+
 router.get("/", async (req, res) => {
   try {
     const platforms = await Platform.find();
@@ -10,6 +11,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch platforms" });
   }
 });
+
 router.post("/", async (req, res) => {
   try {
     const { name, baseUrl, matchPrefix } = req.body;
@@ -33,6 +35,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Failed to create platform" });
   }
 });
+
 router.put("/:id", async (req, res) => {
   try {
     const { name, baseUrl, matchPrefix } = req.body;
@@ -51,6 +54,7 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update platform" });
   }
 });
+
 router.delete("/:id", async (req, res) => {
   try {
     const platform = await Platform.findByIdAndDelete(req.params.id);
