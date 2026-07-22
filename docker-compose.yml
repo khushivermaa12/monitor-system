@@ -1,0 +1,39 @@
+
+services:
+
+
+  # ─── Node.js Backend ─────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: monitor_backend
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      # MongoDB Atlas connection string
+      MONGO_URI: mongodb+srv://khushiverma-12:12%21Khushi@user.uuxbvbn.mongodb.net/platform-monitor?retryWrites=true&w=majority&appName=user
+      SESSION_SECRET: ${SESSION_SECRET:-change-this-in-production}
+      FRONTEND_URL: http://localhost
+    networks:
+      - monitor_net
+
+  # ─── Nginx + React Frontend ───────────────────────────────────────────────────
+  frontend:
+    build:
+      # Use project root as build context so nginx config & Frontend/ are accessible
+      context: .
+      dockerfile: Frontend/Dockerfile
+    container_name: monitor_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - monitor_net
+
+networks:
+  monitor_net:
+    driver: bridge
+

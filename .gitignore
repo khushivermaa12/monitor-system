@@ -2,3 +2,14 @@ NGINX-WORKFLOW.md
 TESTING-CHECKLIST.md
 nginx-implementation-plan.md
 test-locally.sh
+
+# Environment files (contain secrets - never commit these)
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
